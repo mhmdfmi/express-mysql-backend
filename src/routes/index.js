@@ -1,10 +1,13 @@
+// filepath: [index.js](http://_vscodecontentref_/0)
 const express = require("express");
-const userRoutes = require("./user.routes");
-const productRoutes = require("./product.routes");
+const apikeyMiddleware = require("../middlewares/apikey.middleware");
 
 const router = express.Router();
 
-router.use("/users", userRoutes);
-router.use("/products", productRoutes);
+// Terapkan API key ke semua endpoint API
+router.use(apikeyMiddleware);
+
+router.use("/users", require("./user.routes"));
+router.use("/products", require("./product.routes"));
 
 module.exports = router;

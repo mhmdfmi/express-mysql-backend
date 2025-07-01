@@ -34,6 +34,7 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
    HOST=http://localhost
    PORT=3001
    ORIGIN=http://localhost:3001/api/v1
+   API_KEYS=your_api_keys
    DB_HOST=localhost
    DB_USER=root
    DB_PASSWORD=yourpassword
