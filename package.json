@@ -1,0 +1,42 @@
+{
+  "name": "express-mysql-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "cross-env NODE_ENV=test jest",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "init-db": "node src/init-db.js",
+    "pm2:start": "pm2 start src/server.js -i max",
+    "pm2:stop": "pm2 stop all",
+    "pm2:restart": "pm2 restart all",
+    "pm2:logs": "pm2 logs",
+    "pm2:monit": "pm2 monit",
+    "pm2:save": "pm2 save",
+    "pm2:resurrect": "pm2 resurrect"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "compression": "^1.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1",
+    "mysql2": "^3.14.1",
+    "node-cache": "^5.1.2",
+    "sharp": "^0.34.2"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^30.0.3",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.1"
+  }
+}
