@@ -62,7 +62,7 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
 ## Dokumentasi API
 
 Buka halaman dokumentasi di:  
-`http://localhost:3001/docs.html`
+`http://localhost:3001/docs`
 
 ## Contoh Endpoint
 
