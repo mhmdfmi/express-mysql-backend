@@ -72,7 +72,11 @@
     <h1>📘 API Documentation</h1>
     <p style="text-align: center; color: #cbd5e1">
       Welcome to the documentation for your Express MySQL Backend API.<br />
-      Below you'll find available endpoints and usage examples.
+      Below you'll find available endpoints and usage examples.<br />
+      <b
+        >All API endpoints require a valid <code>api-key</code> header or
+        <code>api_key</code> query parameter.</b
+      >
     </p>
 
     <div class="section">
@@ -82,9 +86,9 @@
       </p>
       <p>Register a new user.</p>
       <code>
-        POST /api/v1/users/auth/register Content-Type: application/json {
-        "name": "John Doe", "email": "john@example.com", "password":
-        "password123" }
+        POST /api/v1/users/auth/register Headers: api-key: &lt;your-api-key&gt;
+        Content-Type: application/json { "name": "John Doe", "email":
+        "john@example.com", "password": "password123" }
       </code>
 
       <p class="endpoint">
@@ -92,8 +96,9 @@
       </p>
       <p>Login and get JWT token.</p>
       <code>
-        POST /api/v1/users/auth/login Content-Type: application/json { "email":
-        "john@example.com", "password": "password123" }
+        POST /api/v1/users/auth/login Headers: api-key: &lt;your-api-key&gt;
+        Content-Type: application/json { "email": "john@example.com",
+        "password": "password123" }
       </code>
       <p>Response:</p>
       <code>
@@ -107,8 +112,8 @@
       <p class="endpoint"><span class="method get">GET</span> /api/v1/users</p>
       <p>Get paginated users. <b>Requires Authorization header</b>.</p>
       <code>
-        GET /api/v1/users?page=1&pageSize=20 Headers: Authorization: Bearer
-        &lt;token&gt;
+        GET /api/v1/users?page=1&pageSize=20 Headers: api-key:
+        &lt;your-api-key&gt; Authorization: Bearer &lt;token&gt;
       </code>
 
       <p class="endpoint">
@@ -118,7 +123,8 @@
         Get all users (no pagination). <b>Requires Authorization header</b>.
       </p>
       <code>
-        GET /api/v1/users/all Headers: Authorization: Bearer &lt;token&gt;
+        GET /api/v1/users/all Headers: api-key: &lt;your-api-key&gt;
+        Authorization: Bearer &lt;token&gt;
       </code>
 
       <p class="endpoint">
@@ -126,9 +132,10 @@
       </p>
       <p>Update your own profile. <b>Requires Authorization header</b>.</p>
       <code>
-        PUT /api/v1/users/me Headers: Authorization: Bearer &lt;token&gt;
-        Content-Type: application/json { "name": "New Name", "email":
-        "new@email.com", "password": "newpassword" }
+        PUT /api/v1/users/me Headers: api-key: &lt;your-api-key&gt;
+        Authorization: Bearer &lt;token&gt; Content-Type: application/json {
+        "name": "New Name", "email": "new@email.com", "password": "newpassword"
+        }
       </code>
 
       <p class="endpoint">
@@ -136,7 +143,8 @@
       </p>
       <p>Delete your own account. <b>Requires Authorization header</b>.</p>
       <code>
-        DELETE /api/v1/users/me Headers: Authorization: Bearer &lt;token&gt;
+        DELETE /api/v1/users/me Headers: api-key: &lt;your-api-key&gt;
+        Authorization: Bearer &lt;token&gt;
       </code>
 
       <p class="endpoint">
@@ -144,8 +152,9 @@
       </p>
       <p>Admin only: Update role of another user.</p>
       <code>
-        PUT /api/v1/users/2 Headers: Authorization: Bearer &lt;admin-token&gt;
-        Content-Type: application/json { "role": "admin" }
+        PUT /api/v1/users/2 Headers: api-key: &lt;your-api-key&gt;
+        Authorization: Bearer &lt;admin-token&gt; Content-Type: application/json
+        { "role": "admin" }
       </code>
 
       <p class="endpoint">
@@ -153,8 +162,8 @@
       </p>
       <p>Admin only: Delete another user.</p>
       <code>
-        DELETE /api/v1/users/2 Headers: Authorization: Bearer
-        &lt;admin-token&gt;
+        DELETE /api/v1/users/2 Headers: api-key: &lt;your-api-key&gt;
+        Authorization: Bearer &lt;admin-token&gt;
       </code>
     </div>
 
@@ -164,31 +173,42 @@
         <span class="method get">GET</span> /api/v1/products
       </p>
       <p>Get paginated products.</p>
-      <code> GET /api/v1/products?page=1&pageSize=10 </code>
+      <code>
+        GET /api/v1/products?page=1&pageSize=10 Headers: api-key:
+        &lt;your-api-key&gt;
+      </code>
 
       <p class="endpoint">
         <span class="method get">GET</span> /api/v1/products/all
       </p>
       <p>Get all products (no pagination).</p>
-      <code> GET /api/v1/products/all </code>
+      <code>
+        GET /api/v1/products/all Headers: api-key: &lt;your-api-key&gt;
+      </code>
 
       <p class="endpoint">
         <span class="method get">GET</span> /api/v1/products/:id
       </p>
       <p>Get product by ID.</p>
-      <code> GET /api/v1/products/1 </code>
+      <code>
+        GET /api/v1/products/1 Headers: api-key: &lt;your-api-key&gt;
+      </code>
 
       <p class="endpoint">
         <span class="method post">POST</span> /api/v1/products
       </p>
       <p>
         Create product (with optional image).
-        <b>Requires Authorization header</b>.
+        <b>Requires Authorization header</b>.<br />
+        <span style="color: #f87171"
+          ><b>Note:</b> Maximum image size is 1 MB.</span
+        >
       </p>
       <code>
-        POST /api/v1/products Headers: Authorization: Bearer &lt;token&gt;
-        Content-Type: multipart/form-data Fields: name: "Product Name" price:
-        "1000.00" description: "Description" image: (file, optional)
+        POST /api/v1/products Headers: api-key: &lt;your-api-key&gt;
+        Authorization: Bearer &lt;token&gt; Content-Type: multipart/form-data
+        Fields: name: "Product Name" price: "1000.00" description: "Description"
+        image: (file, optional)
       </code>
 
       <p class="endpoint">
@@ -196,12 +216,16 @@
       </p>
       <p>
         Update product (with optional image).
-        <b>Requires Authorization header</b>.
+        <b>Requires Authorization header</b>.<br />
+        <span style="color: #f87171"
+          ><b>Note:</b> Maximum image size is 1 MB.</span
+        >
       </p>
       <code>
-        PUT /api/v1/products/1 Headers: Authorization: Bearer &lt;token&gt;
-        Content-Type: multipart/form-data Fields: name: "New Name" price:
-        "2000.00" description: "Updated description" image: (file, optional)
+        PUT /api/v1/products/1 Headers: api-key: &lt;your-api-key&gt;
+        Authorization: Bearer &lt;token&gt; Content-Type: multipart/form-data
+        Fields: name: "New Name" price: "2000.00" description: "Updated
+        description" image: (file, optional)
       </code>
 
       <p class="endpoint">
@@ -209,35 +233,52 @@
       </p>
       <p>Delete product. <b>Requires Authorization header</b>.</p>
       <code>
-        DELETE /api/v1/products/1 Headers: Authorization: Bearer &lt;token&gt;
+        DELETE /api/v1/products/1 Headers: api-key: &lt;your-api-key&gt;
+        Authorization: Bearer &lt;token&gt;
+      </code>
+    </div>
+
+    <div class="section">
+      <h2>API Key Usage</h2>
+      <p>
+        <b>All API endpoints require an API key.</b><br />
+        You can provide it via HTTP header <code>api-key</code> or as a query
+        parameter <code>?api_key=...</code>.
+      </p>
+      <code>
+        GET /api/v1/products Headers: api-key: &lt;your-api-key&gt; atau GET
+        /api/v1/products?api_key=&lt;your-api-key&gt;
       </code>
     </div>
 
     <div class="section">
       <h2>Image Access</h2>
       <p>All uploaded product images can be accessed via:</p>
-      <code> GET /uploads/&lt;filename&gt; </code>
-      <p>Example:</p>
+      <code>GET /uploads/&lt;filename&gt;</code>
+      <p>Example 1:</p>
       <code>
-        <img
-          src="http://localhost:3001/uploads/default.jpg"
-          alt="Product Image"
-          width="100"
-          height="100"
-        />
+        &lt;img src="https://yourdomain.com/uploads/default.jpg" alt="Product
+        Image" width="200" height="200" style="object-fit:cover;
+        border-radius:0.5rem;" /&gt;
+      </code>
+      <p>Example 2:</p>
+      <code>
+        &lt;img src="http://localhost:3001/uploads/default.jpg" alt="Product
+        Image" width="200" height="200" style="object-fit:cover;
+        border-radius:0.5rem;" /&gt;
       </code>
     </div>
 
     <div class="section">
       <h2>Example: Fetch Products with Image (JavaScript)</h2>
       <code>
-        fetch('/api/v1/products') .then(res => res.json()) .then(data => {
-        data.data.forEach(product => { const img =
-        document.createElement('img'); img.src = product.image_url ?
-        product.image_url : '/uploads/default.jpg'; img.width = 200; // atur
-        lebar img.height = 200; // atur tinggi img.style.objectFit = "cover";
-        img.style.borderRadius = "0.5rem"; document.body.appendChild(img); });
-        });
+        fetch('/api/v1/products', { headers: { "api-key": "&lt;your-api-key&gt;"
+        } }) .then(res => res.json()) .then(data => { data.data.forEach(product
+        => { const img = document.createElement('img'); img.src =
+        product.image_url ? product.image_url : '/uploads/default.jpg';
+        img.width = 200; // set width img.height = 200; // set height
+        img.style.objectFit = "cover"; img.style.borderRadius = "0.5rem";
+        document.body.appendChild(img); }); });
       </code>
     </div>
   </body>
