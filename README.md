@@ -47,7 +47,7 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
 4. **Jalankan migrasi/init database (jika ada):**
 
    ```sh
-   node src/init-db.js
+   npm run init-db
    ```
 
 5. **Jalankan server:**
