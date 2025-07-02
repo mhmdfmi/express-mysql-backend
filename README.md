@@ -1,6 +1,6 @@
 # Express MySQL Backend API
 
-Sebuah backend RESTful API menggunakan Node.js, Express, dan MySQL yang mendukung fitur manajemen user dan produk, autentikasi JWT, serta upload gambar produk.  
+Sebuah backend RESTful API menggunakan Node.js, Express, dan MySQL yang mendukung fitur manajemen user & produk, autentikasi JWT, upload gambar produk, serta validasi API key untuk keamanan.  
 API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, atau sistem manajemen inventaris.
 
 ## Fitur Utama
@@ -8,6 +8,7 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
 - CRUD user & produk (dengan pagination dan endpoint all)
 - Autentikasi & otorisasi JWT (user & admin)
 - Upload gambar produk (dengan Multer, tersimpan di server, URL gambar tersedia di API)
+- Validasi API key di semua endpoint (gunakan header `x-api-key` atau query param `api_key`)
 - Endpoint akses gambar statis (`/uploads/<filename>`)
 - Middleware keamanan (CORS, Helmet, Rate Limiting)
 - Struktur kode modular (MVC: controller, service, repository)
@@ -18,7 +19,7 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
 1. **Clone repository:**
 
    ```sh
-   git clone https://github.com/USERNAME/express-mysql-backend.git
+   git clone https://github.com/mhmdfmi/express-mysql-backend.git
    cd express-mysql-backend
    ```
 
@@ -28,13 +29,13 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
    npm install
    ```
 
-3. **Buat file `.env` dan sesuaikan konfigurasi database:**
+3. **Buat file `.env` dan sesuaikan konfigurasi:**
 
    ```
    HOST=http://localhost
    PORT=3001
-   ORIGIN=http://localhost:3001/api/v1
-   API_KEYS=your_api_keys
+   ORIGIN=http://localhost:3001
+   API_KEYS=2f8e6c7b-1a3d-4e9f-8b2c-7d1e5a6f9b3c,7e4d2a1b-9c8f-4b6e-8d2a-3f7c5e1a9b4d
    DB_HOST=localhost
    DB_USER=root
    DB_PASSWORD=yourpassword
@@ -47,7 +48,7 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
 4. **Jalankan migrasi/init database (jika ada):**
 
    ```sh
-   node src/init-db.js
+   npm run init-db
    ```
 
 5. **Jalankan server:**
@@ -62,7 +63,14 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
 ## Dokumentasi API
 
 Buka halaman dokumentasi di:  
-`http://localhost:3001/public/pages/docs.html`
+`http://localhost:3001/docs`
+
+## Contoh Penggunaan API Key
+
+- **Header:**  
+  `api-key: 2f8e6c7b-1a3d-4e9f-8b2c-7d1e5a6f9b3c`
+- **Query param:**  
+  `/api/v1/products?api_key=2f8e6c7b-1a3d-4e9f-8b2c-7d1e5a6f9b3c`
 
 ## Contoh Endpoint
 
@@ -83,8 +91,9 @@ Buka halaman dokumentasi di:
 ## Catatan
 
 - Folder `uploads/` di root project digunakan untuk menyimpan file gambar produk.  
-  File ini di-ignore di git, kecuali `default.jpg` jika diperlukan.
+  Folder ini di-ignore di git, kecuali `default.jpg` jika diperlukan.
 - Jangan upload file `.env` atau data sensitif ke repository publik.
+- Setelah menjalankan test, file hasil upload test akan otomatis dibersihkan (kecuali `default.jpg`).
 
 ---
 

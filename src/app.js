@@ -15,7 +15,20 @@ const app = express();
 app.use(compression());
 
 // Middleware: Security headers
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "https:", "'unsafe-inline'"],
+        scriptSrc: ["'self'"],
+        imgSrc: ["'self'", "data:", "https:"],
+        fontSrc: ["'self'", "https:", "data:"],
+        mediaSrc: ["'self'", "data:"], // <-- tambahkan baris ini
+      },
+    },
+  })
+);
 
 // Middleware: CORS
 const origin = process.env.ORIGIN || "your_origin";
@@ -37,17 +50,14 @@ if (process.env.NODE_ENV !== "test") {
 app.use("/api/v1", routes);
 
 // Static Pages
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+app.use("/public", express.static(path.join(__dirname, "../public")));
 app.get("/", (req, res) => {
-  res
-    .status(200)
-    .sendFile(path.join(__dirname, "../src/public/pages/index.html"));
+  res.status(200).sendFile(path.join(__dirname, "../public/pages/index.html"));
 });
 app.get("/docs", (req, res) => {
-  res
-    .status(200)
-    .sendFile(path.join(__dirname, "../src/public/pages/docs.html"));
+  res.status(200).sendFile(path.join(__dirname, "../public/pages/docs.html"));
 });
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // Error handling middleware (harus paling bawah)
 app.use((err, req, res, next) => {
