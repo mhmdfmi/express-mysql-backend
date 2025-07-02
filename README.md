@@ -8,7 +8,7 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
 - CRUD user & produk (dengan pagination dan endpoint all)
 - Autentikasi & otorisasi JWT (user & admin)
 - Upload gambar produk (dengan Multer, tersimpan di server, URL gambar tersedia di API)
-- Validasi API key di semua endpoint (gunakan header `x-api-key` atau query param `api_key`)
+- Validasi API key di semua endpoint (gunakan header `api-key` atau query param `api_key`)
 - Endpoint akses gambar statis (`/uploads/<filename>`)
 - Middleware keamanan (CORS, Helmet, Rate Limiting)
 - Struktur kode modular (MVC: controller, service, repository)
