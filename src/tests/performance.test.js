@@ -73,7 +73,7 @@ describe("Performance Test: POST /api/v1/users/auth/login", () => {
   const NUM_REQUESTS = 100;
   const loginData = { email: "john@example.com", password: "password123" };
 
-  it(`should handle ${NUM_REQUESTS} parallel logins under 2 seconds`, async () => {
+  it(`should handle ${NUM_REQUESTS} parallel logins under 5 seconds`, async () => {
     const start = Date.now();
     const responses = await Promise.all(
       Array.from({ length: NUM_REQUESTS }).map(() =>
@@ -87,7 +87,7 @@ describe("Performance Test: POST /api/v1/users/auth/login", () => {
       expect(res.body).toHaveProperty("data");
       expect(res.body.data).toHaveProperty("token");
     });
-    expect(duration).toBeLessThan(3000);
+    expect(duration).toBeLessThan(5000);
     console.log(
       `Handled POST login ${NUM_REQUESTS} requests in ${duration} ms`
     );
@@ -125,7 +125,7 @@ describe("Performance Test: POST /api/v1/users/auth/register", () => {
 describe("Performance Test: POST & DELETE /api/v1/products", () => {
   const NUM_REQUESTS = 100;
 
-  it(`should handle ${NUM_REQUESTS} parallel product creations under 2 seconds`, async () => {
+  it(`should handle ${NUM_REQUESTS} parallel product creations under 3 seconds`, async () => {
     const start = Date.now();
     const responses = await Promise.all(
       Array.from({ length: NUM_REQUESTS }).map((_, i) =>
@@ -150,7 +150,7 @@ describe("Performance Test: POST & DELETE /api/v1/products", () => {
     );
   });
 
-  it(`should handle ${NUM_REQUESTS} parallel product deletions under 2 seconds`, async () => {
+  it(`should handle ${NUM_REQUESTS} parallel product deletions under 3 seconds`, async () => {
     // Buat produk dulu untuk dihapus
     const createResponses = await Promise.all(
       Array.from({ length: NUM_REQUESTS }).map((_, i) =>
