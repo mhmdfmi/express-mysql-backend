@@ -35,7 +35,7 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
    HOST=http://localhost
    PORT=3001
    ORIGIN=http://localhost:3001
-   API_KEYS=2f8e6c7b-1a3d-4e9f-8b2c-7d1e5a6f9b3c,7e4d2a1b-9c8f-4b6e-8d2a-3f7c5e1a9b4d
+   API_KEYS=your_api_key
    DB_HOST=localhost
    DB_USER=root
    DB_PASSWORD=yourpassword
@@ -68,9 +68,9 @@ Buka halaman dokumentasi di:
 ## Contoh Penggunaan API Key
 
 - **Header:**  
-  `api-key: 2f8e6c7b-1a3d-4e9f-8b2c-7d1e5a6f9b3c`
+  `api-key: your_api_key`
 - **Query param:**  
-  `/api/v1/products?api_key=2f8e6c7b-1a3d-4e9f-8b2c-7d1e5a6f9b3c`
+  `/api/v1/products?api_key=your_api_key`
 
 ## Contoh Endpoint
 
