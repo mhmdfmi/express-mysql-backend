@@ -16,7 +16,11 @@
     "pm2:resurrect": "pm2 resurrect"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Muhamad Fahmi",
+    "email": "muhamadfahmi3240@gmail.com",
+    "url": "https://github.com/mhmdfmi"
+  },
   "license": "ISC",
   "description": "",
   "dependencies": {

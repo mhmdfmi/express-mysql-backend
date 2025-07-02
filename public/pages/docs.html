@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📘 API Documentation</title>
+  <meta name="color-scheme" content="dark light" />
+  <style>
+  :root {
+    --soft-light: #f3f4f6;
+    --soft-dark: #0f172a;
+    --soft-card-dark: #1e293b;
+    --soft-card-light: #f1f5f9;
+    --soft-accent: #3b82f6;
+    --soft-accent-light: #60a5fa;
+    --soft-border: #334155;
+    --text-light: #222;
+    --text-dark: #f8fafc;
+    --text-muted: #94a3b8;
+    --shadow: 0 2px 12px rgba(0,0,0,0.12);
+    --sidebar-width: 260px;
+    --sidebar-bg: var(--soft-card-dark);
+    --sidebar-bg-light: #f8fafc;
+    --sidebar-blur: blur(8px);
+    --transition: 0.35s cubic-bezier(.4,0,.2,1);
+  }
+  body::-webkit-scrollbar, html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+  }
+  html{
+    scroll-behavior: smooth;
+  }
+  html, body {
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--soft-dark);
+    color: var(--text-dark);
+    transition: background var(--transition), color var(--transition);
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    overflow-x: hidden;
+  }
+  html.light, body.light {
+    background: var(--soft-light);
+    color: var(--text-light);
+  }
+  /* Tambahkan di bagian style Anda */
+body, .main-content, .section, .section *:not(pre):not(code) {
+  font-size: 0.97rem;
+}
+pre, code {
+  font-size: 0.98rem; /* tetap seperti sebelumnya */
+}
+  .transition-bg { transition: background var(--transition), color var(--transition); }
+  .container, .main-content { max-width: 900px; margin: 0 auto; padding: 0 1rem; }
+  .section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--soft-card-dark);
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+    transition: background var(--transition), box-shadow var(--transition);
+  }
+  html.light .section, body.light .section {
+    background: var(--soft-card-light);
+    box-shadow: 0 2px 12px rgba(59,130,246,0.07);
+  }
+  h1, h2 { color: var(--soft-accent); margin-top: 0; }
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  .font-semibold { font-weight: 600; }
+  .font-bold { font-weight: 700; }
+  .text-xs { font-size: 0.85rem; }
+  .text-muted { color: var(--text-muted); }
+  .text-accent { color: var(--soft-accent); }
+  .rounded { border-radius: 0.5rem; }
+  .rounded-xl { border-radius: 1rem; }
+  .shadow { box-shadow: var(--shadow); }
+  .mb-2 { margin-bottom: 0.5rem; }
+  .mb-4 { margin-bottom: 1rem; }
+  .mb-6 { margin-bottom: 1.5rem; }
+  .mb-8 { margin-bottom: 2rem; }
+  .mb-10 { margin-bottom: 2.5rem; }
+  .mt-1 { margin-top: 0.25rem; }
+  .mt-2 { margin-top: 0.5rem; }
+  .mt-4 { margin-top: 1rem; }
+  .p-2 { padding: 0.5rem; }
+  .p-3 { padding: 1rem; }
+  .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+  .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+  .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+  .gap-2 { gap: 0.5rem; }
+  .gap-4 { gap: 1rem; }
+  .flex { display: flex; }
+  .flex-wrap { flex-wrap: wrap; }
+  .justify-center { justify-content: center; }
+  .w-64 { width: 16rem; }
+  .w-full { width: 100%; }
+  .overflow-x-auto { overflow-x: auto; }
+  .inline-block { display: inline-block; }
+  .text-center { text-align: center; }
+  .text-lg { font-size: 1.15rem; }
+  .text-xl { font-size: 1.3rem; }
+  .text-2xl { font-size: 1.6rem; }
+  .text-sm { font-size: 0.95rem; }
+  .bg-card { background: var(--soft-card-dark); }
+  html.light .bg-card, body.light .bg-card { background: var(--soft-card-light); }
+  .text-soft-accent { color: var(--soft-accent); }
+  .bg-gray-800 { background: #1e293b; }
+  .bg-gray-100 { background: #f1f5f9; }
+  .p-4 { padding: 1.2rem; }
+  .rounded { border-radius: 0.5rem; }
+  .shadow { box-shadow: var(--shadow); }
+  .w-64 { width: 16rem; }
+  .overflow-x-auto { overflow-x: auto; }
+  .transition { transition: color 0.2s, background 0.2s; }
+  .hover\:text-soft-accent:hover { color: var(--soft-accent); }
+  .hover\:bg-soft-accent\/10:hover { background: rgba(59,130,246,0.1); }
+  .hidden { display: none !important; }
+  .z-30 { z-index: 30; }
+  .z-40 { z-index: 40; }
+  .z-50 { z-index: 50; }
+  .fixed { position: fixed; }
+  .absolute { position: absolute; }
+  .top-0 { top: 0; }
+  .top-4 { top: 1rem; }
+  .left-0 { left: 0; }
+  .left-4 { left: 1rem; }
+  .right-0 { right: 0; }
+  .inset-0 { top: 0; left: 0; right: 0; bottom: 0; }
+  .h-full { height: 100vh; }
+  .w-fit { width: fit-content; }
+  .pt-16 { padding-top: 4rem; }
+  .pt-20 { padding-top: 5rem; }
+  .pt-28 { padding-top: 7rem; }
+  .pb-10 { padding-bottom: 2.5rem; }
+  .mx-auto { margin-left: auto; margin-right: auto; }
+  .px-4 { padding-left: 1rem; padding-right: 1rem; }
+  .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+  .rounded-xl { border-radius: 1rem; }
+  .rounded { border-radius: 0.5rem; }
+  .backdrop-blur { backdrop-filter: blur(8px); }
+  .transition-bg { transition: background var(--transition), color var(--transition); }
+  #title{
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-decoration: none;
+  }
+
+  /* Navbar */
+  #navbar {
+  background: rgba(30,41,59,0.85);
+  border-bottom: 1px solid var(--soft-border);
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem; /* <-- ubah di sini */
+  height: 3.5rem;
+  transition: background var(--transition), box-shadow var(--transition);
+  box-shadow: 0 2px 16px rgba(30,41,59,0.08);
+  box-sizing: border-box;
+  backdrop-filter: var(--sidebar-blur);
+}
+  html.light #navbar { background: rgba(241,245,249,0.85); }
+  #navbar ul { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
+  #navbar li a { color: inherit; text-decoration: none; font-weight: 500; padding: 0.3rem 0.7rem; border-radius: 0.4rem; transition: background var(--transition), color var(--transition);}
+  #navbar li a:hover, #navbar li a.active { color: var(--soft-accent); background: rgba(59,130,246,0.08);}
+  #theme-toggle { margin-left: 1rem; background: none; border: none; cursor: pointer; border-radius: 50%; padding: 0.4rem; transition: background var(--transition);}
+  #theme-toggle:hover { background: rgba(59,130,246,0.12);}
+  #theme-toggle:focus { outline: 2px solid var(--soft-accent); }
+  /* Sidebar */
+  #sidebar {
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--soft-border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    width: var(--sidebar-width);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    padding-top: 4rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    transition: background var(--transition), transform var(--transition);
+    box-shadow: 2px 0 16px rgba(30,41,59,0.08);
+    backdrop-filter: var(--sidebar-blur);
+  }
+  html.light #sidebar { background: var(--sidebar-bg-light);}
+  #sidebar a {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--soft-border);
+    color: inherit;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 0.4rem;
+    transition: color var(--transition), background var(--transition), padding-left var(--transition);
+    padding-left: 0.5rem;
+  }
+  #sidebar a:hover, #sidebar a.active {
+    color: var(--soft-accent);
+    background: rgba(59,130,246,0.08);
+    padding-left: 1.2rem;
+  }
+  #sidebar button { margin-top: 2rem; }
+  #sidebar-backdrop {
+    background: rgba(0,0,0,0.4);
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition);
+  }
+  #sidebar-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #sidebar-toggle {
+    position: fixed;
+    top: 1rem; left: 1rem;
+    z-index: 60;
+    background: var(--soft-card-dark);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: background var(--transition), box-shadow var(--transition);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    width: 44px; height: 44px;
+  }
+  html.light #sidebar-toggle { background: var(--soft-card-light);}
+  #sidebar-toggle:hover { background: rgba(59,130,246,0.12);}
+  .hamburger span {
+  display: block;
+  height: 3px;
+  width: 28px;
+  margin: 5px 0;
+  background: #fff;
+  border-radius: 2px;
+  transition: all var(--transition);
+  border: 1px solid rgba(0,0,0,0.07);
+}
+html.light .hamburger span {
+  background: #222;
+  border: 1px solid #bbb;
+}
+
+/* HTTP Method Block */
+.method-block {
+  display: inline-block;
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+  font-size: 0.98rem;
+  font-weight: bold;
+  border-radius: 0.4rem;
+  padding: 0.18em 0.9em 0.18em 0.9em;
+  margin-right: 0.7em;
+  letter-spacing: 1px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  border: 1.5px solid transparent;
+  vertical-align: middle;
+}
+.method-get    { background: #e6f9ed; color: #15803d; border-color: #22c55e; }
+.method-post   { background: #f0f7ff; color: #2563eb; border-color: #3b82f6; }
+.method-put    { background: #fffbe7; color: #b45309; border-color: #fde047; }
+.method-delete { background: #fff1f2; color: #dc2626; border-color: #f87171; }
+  /* Hamburger animation */
+  #sidebar-toggle.open .bar1 { transform: rotate(45deg) translate(6px, 6px);}
+  #sidebar-toggle.open .bar2 { opacity: 0;}
+  #sidebar-toggle.open .bar3 { transform: rotate(-45deg) translate(7px, -7px);}
+  /* Sidebar animation */
+  .sidebar { will-change: transform; }
+  .sidebar-closed { transform: translateX(-110%);}
+  .sidebar-open { transform: translateX(0);}
+  .main-content { max-width: 900px; margin: 0 auto; }
+  pre, code {
+    font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+    background: #232b3b;
+    color: #facc15;
+    border-radius: 0.5rem;
+    padding: 0.7rem 1rem;
+    font-size: 0.98rem;
+    margin: 0.5rem 0;
+    display: block;
+    overflow-x: auto;
+    transition: background var(--transition), color var(--transition);
+  }
+  html.light pre, html.light code, body.light pre, body.light code {
+    background: #e5e7eb;
+    color: #334155;
+  }
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .container, .main-content { max-width: 100%; }
+  }
+  @media (max-width: 900px) {
+    .section { padding: 1rem; }
+    .main-content { padding: 10rem 0.5rem; }
+    .w-64 { width: 100%; }
+  }
+  @media (max-width: 700px) {
+    .section { padding: 0.7rem; }
+    .main-content { padding: 10rem 0.2rem; }
+    .w-64 { width: 100%; }
+    #navbar ul { gap: 0.7rem; }
+    h1 { font-size: 1.5rem;}
+    h2 { font-size: 1.1rem;}
+     html, body {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: medium;
+  }
+  .main-content {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 5rem;
+  }
+  }
+  @media (max-width: 767px) {
+    #navbar { display: none !important; }
+    #sidebar-toggle { display: flex !important; }
+  }
+  @media (min-width: 768px) {
+    #navbar { display: flex !important; }
+    #sidebar, #sidebar-toggle, #sidebar-backdrop { display: none !important; }
+     html, body {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: medium;
+  }
+  .main-content {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 5rem;
+  }
+  }
+
+  /* ...existing code... */
+@media (max-width: 400px) {
+  html, body {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: small;
+  }
+  .main-content {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 5rem;
+  }
+}
+</style>
+</head>
+
+<body class="transition-bg min-h-screen">
+  <!-- Navigation Bar -->
+  <nav id="navbar">
+    <div class="flex items-center gap-2">
+      <a href="#title" style="text-decoration: none;">
+        <span class="text-2xl">📘</span>
+        <span class="font-bold text-lg text-accent">API Docs</span>
+      </a>
+    </div>
+    <ul>
+      <li><a href="#auth">Authentication</a></li>
+      <li><a href="#users">Users</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#apikey">API Key</a></li>
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+    <button id="theme-toggle" title="Toggle theme">
+      <span id="theme-icon" class="text-xl">🌙</span>
+    </button>
+  </nav>
+  <!-- Sidebar for mobile -->
+  <div class="md:hidden">
+    <button id="sidebar-toggle" class="hamburger" aria-label="Open sidebar" aria-expanded="false">
+  <span class="bar1"></span>
+  <span class="bar2"></span>
+  <span class="bar3"></span>
+</button>
+    <div id="sidebar" class="sidebar sidebar-closed">
+  <a href="#auth" class="sidebar-link">Authentication</a>
+  <a href="#users" class="sidebar-link">Users</a>
+  <a href="#products" class="sidebar-link">Products</a>
+  <a href="#apikey" class="sidebar-link">API Key</a>
+  <a href="#examples" class="sidebar-link">Examples</a>
+  <button id="theme-toggle-mobile" title="Toggle theme">
+    <span id="theme-icon-mobile" class="text-xl">🌙</span>
+  </button>
+</div>
+    <div id="sidebar-backdrop" class="hidden"></div>
+  </div>
+
+  <main id="title" class="main-content pt-20 pb-10 px-4">
+  <section class="mb-8 text-center">
+    <h1 class="font-bold text-2xl mb-2 text-accent">Express MySQL Backend API</h1>
+    <p class="text-muted text-lg">A secure, scalable RESTful API for user & product management with JWT, API key, and image upload support.</p>
+    <div class="mt-4 flex justify-center gap-2">
+      <span class="inline-block bg-card px-3 py-1 rounded text-xs text-accent">Dark/Light Mode</span>
+      <span class="inline-block bg-card px-3 py-1 rounded text-xs text-accent">Responsive</span>
+      <span class="inline-block bg-card px-3 py-1 rounded text-xs text-accent">API Key Protected</span>
+    </div>
+  </section>
+
+  <!-- Authentication -->
+  <section id="auth" class="section mb-10">
+    <h2 class="font-semibold text-2xl mb-4 text-accent">Authentication</h2>
+    <div class="mb-4">
+      <div class="font-semibold mb-1">Register</div>
+      <div>
+        <span class="method-block method-post">POST</span>
+        <span>/api/v1/users/auth/register</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+  Content-Type: application/json
+
+Body:
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123"
+}</code></pre>
+      <div class="text-xs text-muted mb-2">Register a new user. Returns user data (without password).</div>
+    </div>
+    <div class="mb-4">
+      <div class="font-semibold mb-1">Login</div>
+      <div>
+        <span class="method-block method-post">POST</span>
+        <span>/api/v1/users/auth/login</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+  Content-Type: application/json
+
+Body:
+{
+  "email": "john@example.com",
+  "password": "password123"
+}</code></pre>
+      <div class="text-xs text-muted mb-2">Login and get JWT token for protected endpoints.</div>
+      <div class="font-semibold">Response:</div>
+      <pre><code>{
+  "statusCode": 200,
+  "message": "Login successful",
+  "data": { "token": "..." }
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- Users -->
+  <section id="users" class="section mb-10">
+    <h2 class="font-semibold text-2xl mb-4 text-accent">Users</h2>
+    <div class="mb-4">
+      <div class="font-semibold mb-1">Get Users (Paginated)</div>
+      <div>
+        <span class="method-block method-get">GET</span>
+        <span>/api/v1/users?page=1&pageSize=20</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+  Authorization: Bearer &lt;token&gt;
+</code></pre>
+      <div class="text-xs text-muted mb-2">Get paginated users. Requires JWT token.</div>
+    </div>
+    <div class="mb-4">
+      <div class="font-semibold mb-1">Get All Users</div>
+      <div>
+        <span class="method-block method-get">GET</span>
+        <span>/api/v1/users/all</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+  Authorization: Bearer &lt;token&gt;
+</code></pre>
+      <div class="text-xs text-muted mb-2">Get all users (no pagination). Requires JWT token.</div>
+    </div>
+    <div class="mb-4">
+      <div class="font-semibold mb-1">Update Profile</div>
+      <div>
+        <span class="method-block method-put">PUT</span>
+        <span>/api/v1/users/me</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+  Authorization: Bearer &lt;token&gt;
+  Content-Type: application/json
+
+Body:
+{
+  "name": "New Name",
+  "email": "new@email.com",
+  "password": "newpassword"
+}</code></pre>
+      <div class="text-xs text-muted mb-2">Update your own profile. Only provided fields will be updated.</div>
+    </div>
+    <div class="mb-4">
+      <div class="font-semibold mb-1">Delete Account</div>
+      <div>
+        <span class="method-block method-delete">DELETE</span>
+        <span>/api/v1/users/me</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+  Authorization: Bearer &lt;token&gt;
+</code></pre>
+      <div class="text-xs text-muted mb-2">Delete your own account.</div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section id="products" class="section mb-10">
+    <h2 class="font-semibold text-2xl mb-4 text-accent">Products</h2>
+    <div class="mb-4">
+      <div class="font-semibold mb-1">Get Products (Paginated)</div>
+      <div>
+        <span class="method-block method-get">GET</span>
+        <span>/api/v1/products?page=1&pageSize=10</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+</code></pre>
+      <div class="text-xs text-muted mb-2">Get paginated products.</div>
+    </div>
+    <div class="mb-4">
+      <div class="font-semibold mb-1">Get All Products</div>
+      <div>
+        <span class="method-block method-get">GET</span>
+        <span>/api/v1/products/all</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+</code></pre>
+      <div class="text-xs text-muted mb-2">Get all products (no pagination).</div>
+    </div>
+    <div class="mb-4">
+      <div class="font-semibold mb-1">Get Product by ID</div>
+      <div>
+        <span class="method-block method-get">GET</span>
+        <span>/api/v1/products/1</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+</code></pre>
+      <div class="text-xs text-muted mb-2">Get product detail by ID.</div>
+    </div>
+    <div class="mb-4">
+      <div class="font-semibold mb-1">Create Product (with Image)</div>
+      <div>
+        <span class="method-block method-post">POST</span>
+        <span>/api/v1/products</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+  Authorization: Bearer &lt;token&gt;
+  Content-Type: multipart/form-data
+
+Fields:
+  name: "Product Name"
+  price: "1000.00"
+  description: "Description"
+  image: (file, optional)
+</code></pre>
+      <div class="text-xs text-muted mb-2">Create a new product. <b>Note:</b> Maximum image size is 1 MB.</div>
+    </div>
+    <div class="mb-4">
+      <div class="font-semibold mb-1">Update Product (with Image)</div>
+      <div>
+        <span class="method-block method-put">PUT</span>
+        <span>/api/v1/products/1</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+  Authorization: Bearer &lt;token&gt;
+  Content-Type: multipart/form-data
+
+Fields:
+  name: "New Name"
+  price: "2000.00"
+  description: "Updated description"
+  image: (file, optional)
+</code></pre>
+      <div class="text-xs text-muted mb-2">Update product by ID. <b>Note:</b> Maximum image size is 1 MB.</div>
+    </div>
+    <div class="mb-4">
+      <div class="font-semibold mb-1">Delete Product</div>
+      <div>
+        <span class="method-block method-delete">DELETE</span>
+        <span>/api/v1/products/1</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+  Authorization: Bearer &lt;token&gt;
+</code></pre>
+      <div class="text-xs text-muted mb-2">Delete product by ID.</div>
+    </div>
+  </section>
+
+  <!-- API Key Usage -->
+  <section id="apikey" class="section mb-10">
+    <h2 class="font-semibold text-2xl mb-4 text-accent">API Key Usage</h2>
+    <div class="mb-4">
+      <div class="font-semibold mb-1">How to Use</div>
+      <div>
+        <span class="method-block method-get">GET</span>
+        <span>/api/v1/products</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+
+or
+
+GET /api/v1/products?api_key=&lt;your-api-key&gt;
+</code></pre>
+      <div class="text-xs text-muted mb-2">All endpoints require a valid API key, either as a header or query parameter.</div>
+    </div>
+  </section>
+
+  <!-- Examples -->
+  <section id="examples" class="section mb-10">
+    <h2 class="font-semibold text-2xl mb-4 text-accent">Frontend Usage Examples</h2>
+    <div class="mb-6">
+      <div class="font-semibold mb-1">Fetch Products with <b>fetch()</b> (Vanilla JS)</div>
+      <pre><code>
+// Fetch products with API key
+fetch('http://localhost:3001/api/v1/products', {
+  headers: { "x-api-key": "<your-api-key>" }
+})
+  .then(res => res.json())
+  .then(data => {
+    // Loop products and show image
+    data.data.forEach(product => {
+      const img = document.createElement('img');
+      img.src = product.image_url || '/uploads/default.jpg';
+      img.width = 200;
+      img.height = 200;
+      img.style.objectFit = "cover";
+      img.style.borderRadius = "0.5rem";
+      document.body.appendChild(img);
+    });
+  });
+</code></pre>
+      <div class="text-xs text-muted mb-2">This example fetches products and displays their images on the page.</div>
+    </div>
+    <div class="mb-6">
+      <div class="font-semibold mb-1">Fetch Products with <b>React/Next.js</b></div>
+      <pre><code>
+// Example: pages/products.js (Next.js)
+import &#123; useEffect, useState &#125; from "react";
+
+export default function Products() &#123;
+  const [products, setProducts] = useState([]);
+  useEffect(() => &#123;
+    fetch("http://localhost:3001/api/v1/products", &#123;
+      headers: &#123; "x-api-key": "&lt;your-api-key&gt;" &#125;
+    &#125;)
+      .then(res =&gt; res.json())
+      .then(data =&gt; setProducts(data.data));
+  &#125;, []);
+  return (
+    &lt;div style=&#123;&#123;display:"flex",flexWrap:"wrap",gap:"1rem"&#125;&#125;&gt;
+      &#123;products.map(product =&gt; (
+        &lt;div key=&#123;product.id&#125; style=&#123;&#123;
+          background:"#1e293b",padding:"1.2rem",borderRadius:"0.5rem",boxShadow:"0 2px 12px rgba(0,0,0,0.12)",width:"16rem"
+        &#125;&#125;&gt;
+          &lt;img
+            src=&#123;product.image_url || "/uploads/default.jpg"&#125;
+            alt=&#123;product.name&#125;
+            width=&#123;200&#125;
+            height=&#123;200&#125;
+            style=&#123;&#123; objectFit: "cover", borderRadius: "0.5rem" &#125;&#125;
+          /&gt;
+          &lt;div style=&#123;&#123;marginTop:"0.5rem",fontWeight:"bold"&#125;&#125;&gt;&#123;product.name&#125;&lt;/div&gt;
+          &lt;div style=&#123;&#123;fontSize:"0.95rem",color:"#94a3b8"&#125;&#125;&gt;&#123;product.description&#125;&lt;/div&gt;
+          &lt;div style=&#123;&#123;color:"#3b82f6",marginTop:"0.25rem",fontWeight:"600"&#125;&#125;&gt;&#123;product.price&#125;&lt;/div&gt;
+        &lt;/div&gt;
+      ))&#125;
+    &lt;/div&gt;
+  );
+&#125;
+</code></pre>
+      <div class="text-xs text-muted mb-2">This React/Next.js example fetches and displays products with images and details.</div>
+    </div>
+    <div class="mb-6">
+      <div class="font-semibold mb-1">Upload Product Image with <b>Postman</b></div>
+      <div>
+        <span class="method-block method-post">POST</span>
+        <span>/api/v1/products</span>
+      </div>
+      <pre><code>Headers:
+  x-api-key: &lt;your-api-key&gt;
+  Authorization: Bearer &lt;token&gt;
+  Content-Type: multipart/form-data
+
+Body (form-data):
+  name: "Product Name"
+  price: "1000.00"
+  description: "Description"
+  image: (choose file)
+</code></pre>
+      <div class="text-xs text-muted mb-2">Use Postman form-data, add your API key and JWT token in headers.</div>
+    </div>
+    <div class="mb-6">
+      <div class="font-semibold mb-1">Get Product Image in Frontend</div>
+      <pre><code>&lt;img src="http://localhost:3001/uploads/your-image.jpg" alt="Product Image" width="200" height="200" style="object-fit:cover; border-radius:0.5rem;" /&gt;
+</code></pre>
+      <div class="text-xs text-muted mb-2">Use the <code>image_url</code> field from API response for product images.</div>
+    </div>
+  </section>
+</main> 
+  <script src="/public/js/docs.js" type="text/javascript"></script>
+</body>
+
+</html>
