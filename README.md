@@ -18,7 +18,7 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
 1. **Clone repository:**
 
    ```sh
-   git clone https://github.com/USERNAME/express-mysql-backend.git
+   git clone https://github.com/mhmdfmi/express-mysql-backend.git
    cd express-mysql-backend
    ```
 
