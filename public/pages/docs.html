@@ -422,7 +422,7 @@ html.light .hamburger span {
         <span>/api/v1/users/auth/register</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
   Content-Type: application/json
 
 Body:
@@ -440,7 +440,7 @@ Body:
         <span>/api/v1/users/auth/login</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
   Content-Type: application/json
 
 Body:
@@ -468,7 +468,7 @@ Body:
         <span>/api/v1/users?page=1&pageSize=20</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
   Authorization: Bearer &lt;token&gt;
 </code></pre>
       <div class="text-xs text-muted mb-2">Get paginated users. Requires JWT token.</div>
@@ -480,7 +480,7 @@ Body:
         <span>/api/v1/users/all</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
   Authorization: Bearer &lt;token&gt;
 </code></pre>
       <div class="text-xs text-muted mb-2">Get all users (no pagination). Requires JWT token.</div>
@@ -492,7 +492,7 @@ Body:
         <span>/api/v1/users/me</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
   Authorization: Bearer &lt;token&gt;
   Content-Type: application/json
 
@@ -511,7 +511,7 @@ Body:
         <span>/api/v1/users/me</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
   Authorization: Bearer &lt;token&gt;
 </code></pre>
       <div class="text-xs text-muted mb-2">Delete your own account.</div>
@@ -528,7 +528,7 @@ Body:
         <span>/api/v1/products?page=1&pageSize=10</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
 </code></pre>
       <div class="text-xs text-muted mb-2">Get paginated products.</div>
     </div>
@@ -539,7 +539,7 @@ Body:
         <span>/api/v1/products/all</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
 </code></pre>
       <div class="text-xs text-muted mb-2">Get all products (no pagination).</div>
     </div>
@@ -550,7 +550,7 @@ Body:
         <span>/api/v1/products/1</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
 </code></pre>
       <div class="text-xs text-muted mb-2">Get product detail by ID.</div>
     </div>
@@ -561,7 +561,7 @@ Body:
         <span>/api/v1/products</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
   Authorization: Bearer &lt;token&gt;
   Content-Type: multipart/form-data
 
@@ -580,7 +580,7 @@ Fields:
         <span>/api/v1/products/1</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
   Authorization: Bearer &lt;token&gt;
   Content-Type: multipart/form-data
 
@@ -599,7 +599,7 @@ Fields:
         <span>/api/v1/products/1</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
   Authorization: Bearer &lt;token&gt;
 </code></pre>
       <div class="text-xs text-muted mb-2">Delete product by ID.</div>
@@ -616,7 +616,7 @@ Fields:
         <span>/api/v1/products</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
 
 or
 
@@ -634,7 +634,7 @@ GET /api/v1/products?api_key=&lt;your-api-key&gt;
       <pre><code>
 // Fetch products with API key
 fetch('http://localhost:3001/api/v1/products', {
-  headers: { "x-api-key": "<your-api-key>" }
+  headers: { "api-key": "<your-api-key>" }
 })
   .then(res => res.json())
   .then(data => {
@@ -662,7 +662,7 @@ export default function Products() &#123;
   const [products, setProducts] = useState([]);
   useEffect(() => &#123;
     fetch("http://localhost:3001/api/v1/products", &#123;
-      headers: &#123; "x-api-key": "&lt;your-api-key&gt;" &#125;
+      headers: &#123; "api-key": "&lt;your-api-key&gt;" &#125;
     &#125;)
       .then(res =&gt; res.json())
       .then(data =&gt; setProducts(data.data));
@@ -698,7 +698,7 @@ export default function Products() &#123;
         <span>/api/v1/products</span>
       </div>
       <pre><code>Headers:
-  x-api-key: &lt;your-api-key&gt;
+  api-key: &lt;your-api-key&gt;
   Authorization: Bearer &lt;token&gt;
   Content-Type: multipart/form-data
 
