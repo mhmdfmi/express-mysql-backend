@@ -6,9 +6,10 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
 ## Fitur Utama
 
 - CRUD user & produk (dengan pagination dan endpoint all)
-- Autentikasi & otorisasi JWT (user & admin)
+- Autentikasi & otorisasi JWT (user & admin) dengan dukungan **refresh token** dan fitur logout
+- Proteksi CSRF menggunakan middleware `csurf` dan manajemen session dengan `express-session`
 - Upload gambar produk (dengan Multer, tersimpan di server, URL gambar tersedia di API)
-- Validasi API key di semua endpoint (gunakan header `api-key` atau query param `api_key`)
+- Validasi API key di semua endpoint (gunakan header `x-api-key` atau query param `api_key`), dengan pengecualian pada environment test
 - Endpoint akses gambar statis (`/uploads/<filename>`)
 - Middleware keamanan (CORS, Helmet, Rate Limiting)
 - Struktur kode modular (MVC: controller, service, repository)
@@ -35,13 +36,15 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
    HOST=http://localhost
    PORT=3001
    ORIGIN=http://localhost:3001
-   API_KEYS=2f8e6c7b-1a3d-4e9f-8b2c-7d1e5a6f9b3c,7e4d2a1b-9c8f-4b6e-8d2a-3f7c5e1a9b4d
+   API_KEYS=your_api_key
    DB_HOST=localhost
    DB_USER=root
    DB_PASSWORD=yourpassword
    DB_NAME=express_mysql_backend
    JWT_SECRET=your_jwt_secret
+   JWT_REFRESH_SECRET=your_jwt_refresh_secret
    JWT_EXPIRES_IN=1h
+   JWT_REFRESH_EXPIRES_IN=7d
    NODE_ENV=development
    ```
 
@@ -52,13 +55,19 @@ API ini cocok digunakan sebagai backend aplikasi e-commerce, katalog produk, ata
    ```
 
 5. **Jalankan server:**
+
    ```sh
    npm start
    ```
+
    atau untuk development:
+
    ```sh
    npm run dev
    ```
+
+   npm install
+   cd express-mysql-backend
 
 ## Dokumentasi API
 
@@ -68,14 +77,16 @@ Buka halaman dokumentasi di:
 ## Contoh Penggunaan API Key
 
 - **Header:**  
-  `api-key: 2f8e6c7b-1a3d-4e9f-8b2c-7d1e5a6f9b3c`
+  `x-api-key: your_api_key`
 - **Query param:**  
-  `/api/v1/products?api_key=2f8e6c7b-1a3d-4e9f-8b2c-7d1e5a6f9b3c`
+  `/api/v1/products?api_key=your_api_key`
 
 ## Contoh Endpoint
 
 - **Register:** `POST /api/v1/users/auth/register`
-- **Login:** `POST /api/v1/users/auth/login`
+- **Login:** `POST /api/v1/users/auth/login` (mengembalikan access token dan refresh token)
+- **Refresh Token:** `POST /api/v1/users/auth/refresh-token` (untuk mendapatkan access token baru menggunakan refresh token)
+- **Logout:** `POST /api/v1/users/auth/logout` (untuk menghapus refresh token)
 - **Get Products:** `GET /api/v1/products`
 - **Get All Products:** `GET /api/v1/products/all`
 - **Create Product (dengan gambar):** `POST /api/v1/products` (form-data, field: image)
@@ -87,6 +98,8 @@ Buka halaman dokumentasi di:
   ```sh
   npm test
   ```
+- Pengujian performa sudah disesuaikan dengan timeout yang lebih longgar untuk pengujian paralel yang realistis.
+- Pengujian juga sudah mencakup proteksi CSRF dengan pengambilan token CSRF dan penggunaan cookie session.
 
 ## Catatan
 
@@ -94,6 +107,9 @@ Buka halaman dokumentasi di:
   Folder ini di-ignore di git, kecuali `default.jpg` jika diperlukan.
 - Jangan upload file `.env` atau data sensitif ke repository publik.
 - Setelah menjalankan test, file hasil upload test akan otomatis dibersihkan (kecuali `default.jpg`).
+- Middleware validasi API key akan dilewati saat environment adalah `test` untuk memudahkan pengujian otomatis.
+- Fitur refresh token dan logout menambah keamanan dan manajemen sesi autentikasi JWT.
+- Middleware CSRF dan session management ditambahkan untuk meningkatkan keamanan aplikasi.
 
 ---
 

@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
     return next();
   }
 
-  const apiKey = req.header("api-key") || req.query.api_key;
+  const apiKey = req.header("x-api-key") || req.query.api_key;
   const validApiKeys = (process.env.API_KEYS || "")
     .split(",")
     .map((k) => k.trim())
