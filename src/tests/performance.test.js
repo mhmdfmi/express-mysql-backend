@@ -5,6 +5,14 @@ const path = require("path");
 const fs = require("fs");
 const uploadsDir = path.join(__dirname, "../../uploads");
 
+// Helper function to get CSRF token and cookie jar
+async function getCsrfTokenAndCookie() {
+  const res = await request(app).get("/api/v1/csrf-token");
+  const csrfToken = res.body.csrfToken;
+  const cookies = res.headers["set-cookie"];
+  return { csrfToken, cookies };
+}
+
 beforeEach(() => {
   cache.flushAll();
 });
@@ -74,18 +82,23 @@ describe("Performance Test: POST /api/v1/users/auth/login", () => {
   const loginData = { email: "john@example.com", password: "password123" };
 
   it(`should handle ${NUM_REQUESTS} parallel logins under 5 seconds`, async () => {
+    const { csrfToken, cookies } = await getCsrfTokenAndCookie();
+
     const start = Date.now();
     const responses = await Promise.all(
       Array.from({ length: NUM_REQUESTS }).map(() =>
-        request(app).post("/api/v1/users/auth/login").send(loginData)
+        request(app)
+          .post("/api/v1/users/auth/login")
+          .set("Cookie", cookies)
+          .set("csrf-token", csrfToken)
+          .send(loginData)
       )
     );
     const duration = Date.now() - start;
     responses.forEach((res) => {
       expect(res.statusCode).toBe(200);
-      expect(res.body).toHaveProperty("statusCode", 200);
-      expect(res.body).toHaveProperty("data");
-      expect(res.body.data).toHaveProperty("token");
+      expect(res.body).toHaveProperty("accessToken");
+      expect(res.body).toHaveProperty("refreshToken");
     });
     expect(duration).toBeLessThan(5000);
     console.log(
@@ -97,11 +110,15 @@ describe("Performance Test: POST /api/v1/users/auth/login", () => {
 describe("Performance Test: POST /api/v1/users/auth/register", () => {
   const NUM_REQUESTS = 100;
   it(`should handle ${NUM_REQUESTS} parallel registrations under 3 seconds`, async () => {
+    const { csrfToken, cookies } = await getCsrfTokenAndCookie();
+
     const start = Date.now();
     const responses = await Promise.all(
       Array.from({ length: NUM_REQUESTS }).map((_, i) =>
         request(app)
           .post("/api/v1/users/auth/register")
+          .set("Cookie", cookies)
+          .set("csrf-token", csrfToken)
           .send({
             name: `TestUser${i}`,
             email: `testuser${Date.now()}${i}@mail.com`,
@@ -126,11 +143,15 @@ describe("Performance Test: POST & DELETE /api/v1/products", () => {
   const NUM_REQUESTS = 100;
 
   it(`should handle ${NUM_REQUESTS} parallel product creations under 3 seconds`, async () => {
+    const { csrfToken, cookies } = await getCsrfTokenAndCookie();
+
     const start = Date.now();
     const responses = await Promise.all(
       Array.from({ length: NUM_REQUESTS }).map((_, i) =>
         request(app)
           .post("/api/v1/products")
+          .set("Cookie", cookies)
+          .set("csrf-token", csrfToken)
           .send({
             name: `Product${i}`,
             price: "1000.00",
@@ -151,11 +172,15 @@ describe("Performance Test: POST & DELETE /api/v1/products", () => {
   });
 
   it(`should handle ${NUM_REQUESTS} parallel product deletions under 3 seconds`, async () => {
+    const { csrfToken, cookies } = await getCsrfTokenAndCookie();
+
     // Buat produk dulu untuk dihapus
     const createResponses = await Promise.all(
       Array.from({ length: NUM_REQUESTS }).map((_, i) =>
         request(app)
           .post("/api/v1/products")
+          .set("Cookie", cookies)
+          .set("csrf-token", csrfToken)
           .send({
             name: `DeleteMe${i}`,
             price: "100.00",
@@ -167,7 +192,12 @@ describe("Performance Test: POST & DELETE /api/v1/products", () => {
 
     const start = Date.now();
     const responses = await Promise.all(
-      productIds.map((id) => request(app).delete(`/api/v1/products/${id}`))
+      productIds.map((id) =>
+        request(app)
+          .delete(`/api/v1/products/${id}`)
+          .set("Cookie", cookies)
+          .set("csrf-token", csrfToken)
+      )
     );
     const duration = Date.now() - start;
     responses.forEach((res) => {
@@ -184,12 +214,15 @@ describe("Performance Test: POST /api/v1/products (upload image)", () => {
   const NUM_REQUESTS = 10; // upload file, jangan terlalu besar
 
   it(`should handle ${NUM_REQUESTS} parallel product creations with image under 5 seconds`, async () => {
+    const { csrfToken, cookies } = await getCsrfTokenAndCookie();
     const imagePath = path.join(__dirname, "../../uploads/default.jpg");
     const start = Date.now();
     const responses = await Promise.all(
       Array.from({ length: NUM_REQUESTS }).map((_, i) =>
         request(app)
           .post("/api/v1/products")
+          .set("Cookie", cookies)
+          .set("csrf-token", csrfToken)
           .set("Content-Type", "multipart/form-data")
           .field("name", `ProductImg${i}`)
           .field("price", "1000.00")
@@ -216,12 +249,15 @@ describe("Performance Test: PUT /api/v1/products/:id (upload image)", () => {
   const NUM_REQUESTS = 10;
 
   it(`should handle ${NUM_REQUESTS} parallel product updates with image under 5 seconds`, async () => {
+    const { csrfToken, cookies } = await getCsrfTokenAndCookie();
     const imagePath = path.join(__dirname, "../../uploads/default.jpg");
     // Buat produk dulu untuk diupdate
     const createResponses = await Promise.all(
       Array.from({ length: NUM_REQUESTS }).map((_, i) =>
         request(app)
           .post("/api/v1/products")
+          .set("Cookie", cookies)
+          .set("csrf-token", csrfToken)
           .send({
             name: `ToUpdate${i}`,
             price: "100.00",
@@ -236,6 +272,8 @@ describe("Performance Test: PUT /api/v1/products/:id (upload image)", () => {
       productIds.map((id, i) =>
         request(app)
           .put(`/api/v1/products/${id}`)
+          .set("Cookie", cookies)
+          .set("csrf-token", csrfToken)
           .set("Content-Type", "multipart/form-data")
           .field("name", `UpdatedProduct${i}`)
           .field("price", "200.00")

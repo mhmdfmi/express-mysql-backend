@@ -1,4 +1,5 @@
 const express = require("express");
+const { body, validationResult } = require("express-validator");
 // Import controller untuk menangani logic produk
 const ProductController = require("../controllers/product.controller");
 // Import middleware autentikasi untuk proteksi endpoint tertentu
@@ -7,7 +8,6 @@ const authMiddleware = require("../middlewares/auth.middleware");
 const productController = new ProductController();
 
 const multer = require("multer");
-const path = require("path");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -22,11 +22,32 @@ const upload = multer({ storage });
 
 const router = express.Router();
 
+// Validation middleware
+const validate = (validations) => {
+  return async (req, res, next) => {
+    await Promise.all(validations.map((validation) => validation.run(req)));
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      return next();
+    }
+    return res.status(400).json({ errors: errors.array() });
+  };
+};
+
 // Endpoint POST /api/v1/products dengan upload image
 router.post(
   "/",
   authMiddleware,
   upload.single("image"), // field name: image
+  validate([
+    body("name").trim().notEmpty().withMessage("Name is required"),
+    body("price")
+      .notEmpty()
+      .withMessage("Price is required")
+      .isFloat({ gt: 0 })
+      .withMessage("Price must be a positive number"),
+    body("description").optional().trim(),
+  ]),
   productController.create.bind(productController)
 );
 
@@ -35,6 +56,18 @@ router.put(
   "/:id",
   authMiddleware,
   upload.single("image"),
+  validate([
+    body("name")
+      .optional()
+      .trim()
+      .notEmpty()
+      .withMessage("Name cannot be empty"),
+    body("price")
+      .optional()
+      .isFloat({ gt: 0 })
+      .withMessage("Price must be a positive number"),
+    body("description").optional().trim(),
+  ]),
   productController.update.bind(productController)
 );
 
