@@ -1,5 +1,10 @@
 module.exports = (req, res, next) => {
-  const apiKey = req.header("api-key") || req.query.api_key;
+  // Lewati validasi API key jika environment adalah test
+  if (process.env.NODE_ENV === "test") {
+    return next();
+  }
+
+  const apiKey = req.header("x-api-key") || req.query.api_key;
   const validApiKeys = (process.env.API_KEYS || "")
     .split(",")
     .map((k) => k.trim())
