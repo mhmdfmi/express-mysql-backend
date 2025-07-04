@@ -1,3 +1,4 @@
 node_modules/
 uploads/
 .env
+security-audit-summary.txt
